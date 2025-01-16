@@ -154,33 +154,23 @@ real_user_journey ✓ [======================================] 000/600 VUs  7m0s
     */}
 // summary
 {/*
-📊 Results (2s target):
-Total Requests: 13,772
-Success Rate: 99.96%
-Request Rate: 36.68 req/sec
-Data Transfer: 253 MB
-
-⚡ Response Times (all under 2s target):
-    Average: 136.63ms (very good!)
-    Median: 129.79ms
-    95th percentile: 213.5ms
-    Maximum: 2.69s (only rare spikes)
-🔍 Page Performance:
-    Perfect (100% under 2s):
-    - Homepage (/)
-    - /blog
-    - /about
-    - /blog/the-power-of-networking
-
-    Minor Issues:
-    - /jobs: 99% under 2s (8 slow out of 2,949)
-    - /candidates: 99% under 2s (3 slow out of 2,949)
-
-🎯 Key Insights:
-    Only 11 requests out of 13,772 exceeded 2s (0.08%)
-    System actually performed better under medium load
-    Very consistent response times
-    DB-heavy pages (/jobs, /candidates) showing slight stress
+ 📊 Overall Performance
+  Success Rate: 99.94%
+  Total Requests: 33,120 (~76 requests/second)
+  Data Transfer: 604 MB received, 4.3 MB sent
+Response Times
+  Average: 187ms
+  Median: 138ms
+  95th percentile: 397ms
+  Maximum: 6.39s (rare spikes)
+Database Performance
+  Average query time: 167ms
+  Median: 131ms
+  95th percentile: 326ms
+Issues Identified
+  78 slow responses recorded (>2000ms)
+  Some pages occasionally exceeded the 2.5s threshold
+  Maximum response time spike of 6.39s (isolated incident)
 
 
 
