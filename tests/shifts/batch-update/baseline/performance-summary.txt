@@ -1,0 +1,85 @@
+Multi-Zone Batch Update API Performance:
+    Total Requests: 10 batches (1000 shifts total)
+    All requests successful (200 status code)
+    Minimum Response Time: 630ms
+    Average Response Time: 1s
+    P95 Response Time: 2.734s
+    P99 Response Time: 3.055s
+    Maximum Response Time: 3s
+    Standard Deviation: 793ms
+    Peak RPS: 0.67 requests/second
+
+QStash Processing Analysis:
+    Total QStash Requests: 40 (processing 25 shifts each)
+    Parallelism: 5 concurrent requests
+    Total User-Perceived Time: 24 seconds for 1000 shifts
+    Effective Processing Rate: ~42 shifts/second
+    Duration Statistics:
+        Average Duration: 1.04s
+        Minimum Duration: 502ms
+        Maximum Duration: 1.737s
+        Common ranges:
+            Fast (500-700ms): 15 requests
+            Medium (1.1-1.4s): 14 requests
+            Slower (1.5-1.7s): 11 requests
+
+Time Pattern Analysis:
+    First request at 10:05:39
+    Last request at 10:06:03
+    Total processing time: ~24 seconds
+    Average gap between requests: ~0.6 seconds
+
+Processing Time Per 100 Shifts:
+    Batch 1: 4.35s (cold start)
+    Batch 2: 3.92s
+    Batch 3: 3.47s
+    Batch 4: 3.28s
+    Batch 5: 3.15s
+    Batch 6: 2.89s
+    Batch 7: 2.82s
+    Batch 8: 2.76s
+    Batch 9: 2.73s
+    Batch 10: 2.34s
+    Average: 3.17s per 100 shifts
+
+Comparison to Create API Baseline:
+    1. Response Times:
+       - Update avg: 3.17s per 100 shifts
+       - Create avg: 3.53s per 100 shifts
+       - ~10% faster for updates
+    
+    2. Consistency:
+       - Similar standard deviation (793ms vs 669ms)
+       - More consistent processing times
+       - Narrower range of response times
+
+    3. Cold Start Impact:
+       - Less pronounced cold start effect
+       - First batch only 37% slower vs baseline's 71%
+
+Processing Patterns:
+    1. Initial Phase (10:05:39 - 10:05:45):
+       - Higher durations (1.2-1.7s)
+       - Cold start effects visible
+
+    2. Mid Processing (10:05:45 - 10:05:55):
+       - Mix of fast and medium durations
+       - Optimal parallelism observed
+
+    3. Final Phase (10:05:55 - 10:06:03):
+       - Consistently faster durations
+       - Most responses under 650ms
+
+Key Findings:
+    1. Update operations slightly faster than creates
+    2. Better cold start performance
+    3. QStash parallelism working effectively
+    4. System shows performance improvement over time
+    5. No failures across all regions
+    6. All performance thresholds met comfortably
+
+Recommendations:
+    1. Current configuration optimal for updates
+    2. Keep batch size at 100 with 25-shift chunks
+    3. Maintain 3-way parallelism
+    4. Consider slight reduction in p99 threshold 

@@ -1,0 +1,87 @@
+ High Volume Batch Update Test Summary (3 req/s):
+
+    API Performance (/api/v1/shifts/batch/update):
+        - Total Requests: 60
+        - Success Rate: 100% (0 failures)
+        - Peak RPS: 3 requests/second
+        
+    Response Time Metrics:
+        - Average: 1,221ms
+        - P95: 2,492ms
+        - P99: 2,522ms
+        - Min: 626ms
+        - Max: 3,000ms
+        - Standard Deviation: 498ms
+
+    Thresholds Status:
+        ✓ p(95) < 5000ms (actual: 2,492ms)
+        ✓ p(99) < 7000ms (actual: 2,522ms)
+        ✓ avg < 3000ms (actual: 1,221ms)
+        ✓ Error Rate < 1% (actual: 0%)
+
+    Response Distribution:
+        - Fast (< 1s): ~40% of requests
+        - Normal (1-2s): ~50% of requests
+        - Slower (2-3s): ~10% of requests
+
+    Key Findings:
+        1. Consistent performance under high volume
+        2. Low latency variance (tight std dev)
+        3. No failed requests
+        4. All performance thresholds met comfortably
+        5. Stable response times across batches
+
+    System Behavior:
+        - Handles concurrent batch updates efficiently
+        - Maintains performance under sustained load
+        - Shows excellent reliability (100% success)
+        - Demonstrates consistent processing times
+
+    Conclusions:
+        1. System handles high-volume updates effectively
+        2. Performance well within acceptable thresholds
+        3. Ready for production load at current configuration
+        4. Batch processing pipeline working optimally
+
+{/* 
+    QStash Processing Performance (/api/v1/shifts/batch/update/process):
+    
+    Request Statistics:
+        - Total Requests: 240 (QStash processing requests)
+        - Success Rate: 100% (all 200 OK)
+        - Processing Period: 12:06:55 - 12:09:11 (~2.5 minutes)
+        
+    Processing Times:
+        - Average: ~835ms
+        - Minimum: 376ms
+        - Maximum: 1,850ms
+        - Distribution:
+            * Fast (< 500ms): ~25%
+            * Medium (500-1000ms): ~50%
+            * Slower (1000-1500ms): ~23%
+            * Slowest (>1500ms): ~2%
+            
+    Throughput Analysis:
+        - Peak: ~5 requests/second
+        - Sustained: ~2 requests/second
+        - Total Shifts Processed: 6,000 (25 shifts per QStash request × 240 requests)
+        - Processing Rate: ~40 shifts/second (6,000 shifts / 150 seconds)
+
+    Processing Patterns:
+        - Consistent batch sizes (25 shifts per QStash request)
+        - Even distribution of processing times
+        - No failed requests
+        - Stable performance across duration
+        
+    System Behavior:
+        - Excellent queue management
+        - Consistent processing times
+        - No backlog accumulation
+        - Efficient parallel processing
+
+    Key Findings:
+        1. Highly reliable processing (100% success)
+        2. Predictable performance range
+        3. Good throughput sustainability (40 shifts/second)
+        4. Effective load distribution
+        5. Successfully processed all 6,000 shifts via 240 QStash requests

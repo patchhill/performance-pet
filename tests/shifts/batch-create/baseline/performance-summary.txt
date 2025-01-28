@@ -1,0 +1,85 @@
+Summary:
+
+    Multi-Zone Batch API Performance:
+        Total Requests: 10 batches (1000 shifts total)
+        All requests successful (200 status code)
+        Minimum Response Time: 840ms
+        Average Response Time: 1s
+        P95 Response Time: 2.526s
+        P99 Response Time: 3s
+        Maximum Response Time: 3s
+        Standard Deviation: 669ms (higher than single-zone)
+        Peak RPS: 0.67 requests/second
+
+    QStash Processing Analysis:
+        Total QStash Requests: 40 (processing 25 shifts each)
+        Parallelism: 3 concurrent requests
+        Duration Statistics:
+            Average Duration: 1.37s
+            Minimum Duration: 531ms
+            Maximum Duration: 2.53s
+            Common ranges:
+                Fast (500-700ms): 12 requests
+                Medium (1.3-1.6s): 20 requests
+                Slower (1.9-2.53s): 8 requests
+
+    Time Pattern Analysis:
+        First request at 14:40:27
+        Last request at 14:40:52
+        Total processing time: ~25 seconds
+        Average gap between requests: ~0.62 seconds
+
+    Processing Time Per 100 Shifts:
+        Batch 1: 4.84s (cold start)
+        Batch 2: 3.12s
+        Batch 3: 3.76s
+        Batch 4: 3.33s
+        Batch 5: 3.87s
+        Batch 6: 2.98s
+        Batch 7: 3.05s
+        Batch 8: 3.54s
+        Batch 9: 3.63s
+        Batch 10: 3.21s
+        Average: 3.53s per 100 shifts
+
+    Comparison to Single-Zone Baseline:
+        1. Response Times:
+           - Multi-zone avg: 3.53s per 100 shifts
+           - Single-zone avg: 2.83s per 100 shifts
+           - ~25% increase in processing time
+        
+        2. Consistency:
+           - Higher standard deviation (669ms vs 424ms)
+           - More variation in processing times
+           - Wider range of response times
+
+        3. Cold Start Impact:
+           - Multiple cold starts across regions
+           - First batch takes longer (4.84s vs 4.27s)
+
+    Processing Patterns:
+        1. Initial Phase (14:40:27 - 14:40:32):
+           - Longer durations (1.4-2.5s)
+           - Cold start effects visible
+
+        2. Mid Processing (14:40:32 - 14:40:45):
+           - Mix of fast and medium durations
+           - Good parallelism observed
+
+        3. Final Phase (14:40:45 - 14:40:52):
+           - Consistent medium-range durations
+           - Some slower responses (2s+)
+
+    Key Findings:
+        1. Multi-zone deployment adds ~0.7s average overhead
+        2. Higher variation in response times
+        3. QStash parallelism still effective
+        4. System remains stable across regions
+        5. No failures despite geographic distribution
+        6. Performance still within acceptable thresholds
+
+    Recommendations:
+        1. Consider region-specific performance tuning
+        2. Monitor cold starts across regions
+        3. Current thresholds appropriate for multi-zone
+        4. Keep parallelism at 3 for optimal performance
